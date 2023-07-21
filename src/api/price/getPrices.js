@@ -12,12 +12,12 @@ module.exports = async (req_, res_) => {
     }
 
     try {
-        const graphItem = await graph.findOne({ timestamp: timestamp });
-        // console.log("graphItem: ", graphItem)
+        const graphItemLte = await graph.find({ timestamp: { $lte: timestamp } }).sort({ timestamp: -1 }).limit(1);
+        console.log("graphItemLte: ", graphItemLte)
 
-        if (graphItem) {
+        if (graphItemLte) {
             return res_.send({
-                result: graphItem,
+                result: graphItemLte,
                 status: 'SUCCESS',
                 message: 'OK'
             });
